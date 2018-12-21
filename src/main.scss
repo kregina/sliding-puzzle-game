@@ -1,0 +1,33 @@
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  background-color: #ECF0F1;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  khtml-tap-highlight-color: rgba(0,0,0,0);
+
+  .sliding-puzzle{
+    background: #00bcd4;
+    display: grid;
+    margin: 0 auto 2em;
+    max-width: 20em;
+    padding: 0.5em;
+
+    li{
+      background: #fff;
+      border: solid 1px #aaa;
+      cursor: pointer;
+      display: flex;
+      list-style: none;
+      align-items: center;
+      justify-content: center;
+      height: 20vw;
+      max-height: 150px;
+
+      &.white {
+        visibility: hidden;
+        cursor: default;
+      }
+    }
+  }
+}
