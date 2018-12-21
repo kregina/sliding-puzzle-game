@@ -1,6 +1,11 @@
 import style from "./main.scss";
 
 
+function tileClicked(e) {
+  if(canMove(e.target)) {
+   swap(e.target, blank);
+  }
+}
 
 function canMove(click) {
   const deltaX = Math.abs(click.style.gridColumnStart - blank.style.gridColumnStart);
