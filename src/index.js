@@ -1,5 +1,30 @@
 import style from "./main.scss";
 
+const size = 3;
+const dificulty = 5;
+const fragment = createHtmlElement(size);
+const tiles = Array.from(fragment.children);
+const blank = tiles[tiles.length - 1];
+blank.className = "white";
+
+const moves = [];
+
+for(let i = 0; i < dificulty; i++) {
+  const availableMoves = tiles.filter(canMove);
+  const randomTile = availableMoves[Math.floor(Math.random() * availableMoves.length)]
+  swap(randomTile, blank);
+  moves.push(randomTile);
+}
+
+/* UNDO MOVES
+let tile;
+while(tile = moves.pop()) {
+  console.log("caiu aqui");
+  swap(tile, blank);
+}
+*/
+
+document.getElementById('ulSliding').appendChild(fragment);
 
 function tileClicked(e) {
   if(canMove(e.target)) {
