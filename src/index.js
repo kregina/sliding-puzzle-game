@@ -2,6 +2,13 @@ import style from "./main.scss";
 
 
 
+function canMove(click) {
+  const deltaX = Math.abs(click.style.gridColumnStart - blank.style.gridColumnStart);
+  const deltaY = Math.abs(click.style.gridRowStart - blank.style.gridRowStart);
+  const delta = deltaX + deltaY;
+  return delta === 1;
+}
+
 function swap(a, b) {
   [a.style.gridRow, b.style.gridRow] = [b.style.gridRow, a.style.gridRow];
   [a.style.gridColumn, b.style.gridColumn] = [b.style.gridColumn, a.style.gridColumn];
