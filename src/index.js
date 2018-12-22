@@ -1,46 +1,77 @@
 import style from './main.scss';
 
-const size = 3;
-const dificulty = 10;
+const size = 4;
+const dificulty = 5;
 const moves = [];
 
-const fragment = createHtmlElement(size);
-const tiles = Array.from(fragment.children);
-const blank = tiles[tiles.length - 1];
+const tiles = createTiles(size);
 
+const blank = tiles[tiles.length - 1];
 blank.className = 'blank';
+
+document.getElementById('solve').onclick = solve  ;
+document.getElementById('shuffle').onclick = shuffle;
+
 shuffle(dificulty);
+
+const fragment = tiles
+  .reduce((fragment, element) => {
+    fragment.appendChild(element);
+    return fragment;
+  },
+  document.createDocumentFragment());
+
 document.getElementById('ulSliding').appendChild(fragment);
-document.getElementById('solve').onclick = solve;
-document.getElementById('shuffle').onclick = _ => shuffle(dificulty);
 
 function tileClicked(e) {
   if (canMove(e.target)) {
     swap(e.target, blank);
     moves.push(e.target);
+    checkWin();
   }
 }
 
-function shuffle(dificulty) {
+function checkWin() {
+  const tileStatuses = tiles
+    .map((el, i) => checkTileWin(size, i, el.style.gridRowStart, el.style.gridColumnStart))
+    .map((win, i) => [win, tiles[i]])
+
+  tileStatuses
+    .forEach(([win, tile]) =>
+      tile.classList.toggle('win', win));
+
+  const playerWon = tileStatuses.every(([win]) => win);
+  if (playerWon) {
+    alert('YOU WIN!!!');
+  }
+}
+
+function checkTileWin(size, index, row, col) {
+  return index == (row - 1) * size + (col - 1);
+}
+
+function shuffle() {
   for (let i = 0; i < dificulty; i++) {
     const availableMoves = tiles.filter(canMove);
-    const randomTile = availableMoves[Math.floor(Math.random() * availableMoves.length)];
-    swap(randomTile, blank);
+    const randomIndex = Math.floor(Math.random() * availableMoves.length);
+    const randomTile = availableMoves[randomIndex];
     moves.push(randomTile);
+    swap(randomTile, blank);
   }
+  checkWin();
 }
 
 function solve() {
   let tile;
   while ((tile = moves.pop())) {
-    console.log('caiu aqui');
     swap(tile, blank);
   }
+  checkWin();
 }
 
-function canMove(click) {
-  const deltaX = Math.abs(click.style.gridColumnStart - blank.style.gridColumnStart);
-  const deltaY = Math.abs(click.style.gridRowStart - blank.style.gridRowStart);
+function canMove(target) {
+  const deltaX = Math.abs(target.style.gridColumnStart - blank.style.gridColumnStart);
+  const deltaY = Math.abs(target.style.gridRowStart - blank.style.gridRowStart);
   const delta = deltaX + deltaY;
   return delta === 1;
 }
@@ -50,21 +81,22 @@ function swap(a, b) {
   [a.style.gridColumn, b.style.gridColumn] = [b.style.gridColumn, a.style.gridColumn];
 }
 
-function createHtmlElement(size) {
-  const fragment = document.createDocumentFragment();
+function createTiles() {
+  const elements = [];
+  let count = 0;
   for (let row = 1; row <= size; row++) {
     for (let col = 1; col <= size; col++) {
       const element = document.createElement('li');
 
-      element.textContent = fragment.children.length + 1;
+      element.textContent = ++count;
       element.style.gridRow = row;
       element.style.gridColumn = col;
 
       element.onclick = tileClicked;
 
-      fragment.appendChild(element);
+      elements.push(element);
     }
   }
-  return fragment;
+  return elements;
 }
 

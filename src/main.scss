@@ -22,6 +22,14 @@ body {
       height: 20vw;
       max-height: 150px;
 
+      &.win {
+        box-shadow: 1px 0 0 1px #4CAF50,
+              0 1px 0 1px #4CAF50,
+              1px 1px 0 1px #4CAF50,
+              1px 0 0 1px #4CAF50 inset,
+              0 1px 0 1px #4CAF50 inset;
+      }
+
       &.blank {
         visibility: hidden;
         cursor: default;
