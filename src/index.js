@@ -41,9 +41,15 @@ function checkWin() {
       tile.classList.toggle('win', win));
 
   const playerWon = tileStatuses.every(([win]) => win);
+  const divWon = document.getElementById('divWon');
   if (playerWon) {
-    alert('YOU WIN!!!');
+    divWon.style.visibility = 'visible';
+    divWon.style.opacity = 1;
   }
+  setTimeout(() => {
+    divWon.style.visibility = 'hidden';
+    divWon.style.opacity = 0;
+  }, 2000);
 }
 
 function checkTileWin(size, index, row, col) {
