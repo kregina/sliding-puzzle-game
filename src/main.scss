@@ -3,8 +3,6 @@ body {
   font-weight: 700;
   font-size: 24px;
   background-color: #ECF0F1;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  khtml-tap-highlight-color: rgba(0,0,0,0);
 
   .sliding-puzzle{
     background: #00bcd4;
@@ -24,10 +22,30 @@ body {
       height: 20vw;
       max-height: 150px;
 
-      &.white {
+      &.blank {
         visibility: hidden;
         cursor: default;
       }
+    }
+  }
+
+  a{
+    cursor: pointer;
+  }
+
+  .shuffle{
+    color: #E91E63;
+
+    &:hover{
+      color: #AD1457;
+    }
+  }
+
+  .solve{
+    color: #4CAF50;
+
+    &:hover{
+      color: #2E7D32;
     }
   }
 }
