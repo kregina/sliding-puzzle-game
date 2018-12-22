@@ -1,7 +1,7 @@
 import style from './main.scss';
 
 const size = 4;
-const dificulty = 5;
+const dificulty = 50;
 const moves = [];
 
 const tiles = createTiles(size);
@@ -89,14 +89,16 @@ function swap(a, b) {
 
 function createTiles() {
   const elements = [];
-  let count = 0;
+  const sizePx = 80 / size;
   for (let row = 1; row <= size; row++) {
     for (let col = 1; col <= size; col++) {
       const element = document.createElement('li');
 
-      element.textContent = ++count;
       element.style.gridRow = row;
       element.style.gridColumn = col;
+      element.style.backgroundImage = "url('src/images/monks.jpg')";
+      element.style.backgroundPositionX = `-${(col -1) * sizePx}vmin`;
+      element.style.backgroundPositionY = `-${(row -1) * sizePx}vmin`;
 
       element.onclick = tileClicked;
 
