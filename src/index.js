@@ -96,7 +96,7 @@ function createTiles() {
 
       element.style.gridRow = row;
       element.style.gridColumn = col;
-      element.style.backgroundImage = "url('src/images/monks.jpg')";
+      element.style.backgroundImage = "url('./assets/monks.jpg')";
       element.style.backgroundPositionX = `-${(col -1) * sizePx}vmin`;
       element.style.backgroundPositionY = `-${(row - 1) * sizePx}vmin`;
       element.style.backgroundSize = '80vmin';
