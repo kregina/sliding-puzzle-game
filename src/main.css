@@ -1,24 +1,23 @@
-:root{
-  --color-background: #ECF0F1;
+:root {
+  --color-background: #ecf0f1;
 
-  --color-info: #2196F3;
-  --color-info-darker: #1565C0;
+  --color-info: #2196f3;
+  --color-info-darker: #1565c0;
 
-  --color-primary: #4CAF50;
-  --color-darker: #2E7D32;
+  --color-primary: #4caf50;
+  --color-darker: #2e7d32;
 
-  --color-accent: #E91E63;
-  --color-accent-darker: #AD1457;
+  --color-accent: #e91e63;
+  --color-accent-darker: #ad1457;
 }
 
 * {
   box-sizing: border-box;
+  transition: all 0.1s ease-in-out;
 }
 
 body {
   font-family: 'Roboto Condensed', sans-serif;
-  font-weight: 700;
-  font-size: 24px;
   background-color: var(--color-background);
 }
 
@@ -38,7 +37,7 @@ html,
   justify-content: center;
 }
 
-.won{
+.win-message {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +50,7 @@ html,
   z-index: 999;
 }
 
-.won p{
+.win-message p {
   background: var(--color-primary);
   line-height: 2em;
   color: #fff;
@@ -60,28 +59,25 @@ html,
   text-align: center;
 }
 
-ul.sliding-puzzle{
+ul.sliding-puzzle {
   width: 80vmin;
   height: 80vmin;
   display: grid;
+  grid-gap: .5em;
   padding: 0;
-  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),
-              0 1px 1px 0 rgba(0,0,0,.14),
-              0 1px 3px 0 rgba(0,0,0,.12);
 }
 
-li{
+ul.sliding-puzzle.win li{
+  box-shadow: none;
+}
+
+li {
   cursor: pointer;
   list-style: none;
   background-repeat: no-repeat;
-}
-
-li.win {
-  box-shadow: 1px 0 0 1px var(--color-primary),
-        0 1px 0 1px var(--color-primary),
-        1px 1px 0 1px var(--color-primary),
-        1px 0 0 1px var(--color-primary) inset,
-        0 1px 0 1px var(--color-primary) inset;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 li.blank {
@@ -89,11 +85,12 @@ li.blank {
   cursor: default;
 }
 
-a{
+
+a {
   cursor: pointer;
 }
 
-a:hover{
+a:hover {
   transition: color 0.8s ease;
 }
 
@@ -101,26 +98,26 @@ a:hover{
   padding: 2em;
 }
 
-.start{
+.start {
   color: var(--color-info);
 }
 
-.start:hover{
+.start:hover {
   color: var(--color-info-darker);
 }
 
-.shuffle{
+.shuffle {
   color: var(--color-accent);
 }
 
-.shuffle:hover{
+.shuffle:hover {
   color: var(--color-accent-darker);
 }
 
-.solve{
+.solve {
   color: var(--color-primary);
 }
 
-.solve:hover{
+.solve:hover {
   color: var(--color-primary-darker);
 }

@@ -3,6 +3,7 @@ import style from './main.css';
 const size = 4;
 const dificulty = 8;
 const moves = [];
+const ulSliding = document.getElementById('ulSliding');
 const startButton = document.getElementById('start');
 const solveButton = document.getElementById('solve');
 const shuffleButton = document.getElementById('shuffle');
@@ -22,9 +23,12 @@ const fragment = tiles.reduce((fragment, element) => {
   return fragment;
 }, document.createDocumentFragment());
 
-document.getElementById('ulSliding').appendChild(fragment);
+ulSliding.appendChild(fragment);
 
 function startGame() {
+  ulSliding.style.gridGap = '0.5em';
+  ulSliding.classList.remove('win');
+
   blank.style.visibility = 'hidden';
 
   startButton.style.display = 'none';
@@ -52,6 +56,9 @@ function checkWin() {
   const playerWon = tileStatuses.every(([win]) => win);
   const divWon = document.getElementById('divWon');
   if (playerWon) {
+    ulSliding.style.gridGap = '0';
+    ulSliding.classList.add('win');
+
     blank.style.visibility = 'visible';
 
     divWon.style.visibility = 'visible';
@@ -73,7 +80,10 @@ function checkTileWin(size, index, row, col) {
 
 function shuffle() {
   for (let i = 0; i < dificulty; i++) {
-    const availableMoves = tiles.filter(canMove);
+    const availableMoves = tiles
+      .filter(canMove)
+      .filter(notEqualToLastMove);
+
     const randomIndex = Math.floor(Math.random() * availableMoves.length);
     const randomTile = availableMoves[randomIndex];
     moves.push(randomTile);
@@ -95,6 +105,10 @@ function canMove(target) {
   const deltaY = Math.abs(target.style.gridRowStart - blank.style.gridRowStart);
   const delta = deltaX + deltaY;
   return delta === 1;
+}
+
+function notEqualToLastMove(tile) {
+  return tile !== moves[moves.length - 1]
 }
 
 function swap(a, b) {
