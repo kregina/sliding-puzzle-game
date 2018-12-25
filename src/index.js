@@ -1,7 +1,7 @@
-import style from './main.scss';
+import style from './main.css';
 
 const size = 4;
-const dificulty = 50;
+const dificulty = 8;
 const moves = [];
 
 const tiles = createTiles(size);
