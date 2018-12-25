@@ -3,25 +3,36 @@ import style from './main.css';
 const size = 4;
 const dificulty = 8;
 const moves = [];
-
+const startButton = document.getElementById('start');
+const solveButton = document.getElementById('solve');
+const shuffleButton = document.getElementById('shuffle');
 const tiles = createTiles(size);
 
 const blank = tiles[tiles.length - 1];
 blank.className = 'blank';
 
-document.getElementById('solve').onclick = solve  ;
-document.getElementById('shuffle').onclick = shuffle;
+startButton.onclick = startGame;
+solveButton.onclick = solve;
+shuffleButton.onclick = shuffle;
 
-shuffle(dificulty);
+startGame();
 
-const fragment = tiles
-  .reduce((fragment, element) => {
-    fragment.appendChild(element);
-    return fragment;
-  },
-  document.createDocumentFragment());
+const fragment = tiles.reduce((fragment, element) => {
+  fragment.appendChild(element);
+  return fragment;
+}, document.createDocumentFragment());
 
 document.getElementById('ulSliding').appendChild(fragment);
+
+function startGame() {
+  blank.style.visibility = 'hidden';
+
+  startButton.style.display = 'none';
+  shuffleButton.style.display = 'block';
+  solveButton.style.display = 'block';
+
+  shuffle(dificulty);
+}
 
 function tileClicked(e) {
   if (canMove(e.target)) {
@@ -34,17 +45,21 @@ function tileClicked(e) {
 function checkWin() {
   const tileStatuses = tiles
     .map((el, i) => checkTileWin(size, i, el.style.gridRowStart, el.style.gridColumnStart))
-    .map((win, i) => [win, tiles[i]])
+    .map((win, i) => [win, tiles[i]]);
 
-  tileStatuses
-    .forEach(([win, tile]) =>
-      tile.classList.toggle('win', win));
+  tileStatuses.forEach(([win, tile]) => tile.classList.toggle('win', win));
 
   const playerWon = tileStatuses.every(([win]) => win);
   const divWon = document.getElementById('divWon');
   if (playerWon) {
+    blank.style.visibility = 'visible';
+
     divWon.style.visibility = 'visible';
     divWon.style.opacity = 1;
+
+    startButton.style.display = 'block';
+    shuffleButton.style.display = 'none';
+    solveButton.style.display = 'none';
   }
   setTimeout(() => {
     divWon.style.visibility = 'hidden';
@@ -97,7 +112,7 @@ function createTiles() {
       element.style.gridRow = row;
       element.style.gridColumn = col;
       element.style.backgroundImage = "url('./assets/monks.jpg')";
-      element.style.backgroundPositionX = `-${(col -1) * sizePx}vmin`;
+      element.style.backgroundPositionX = `-${(col - 1) * sizePx}vmin`;
       element.style.backgroundPositionY = `-${(row - 1) * sizePx}vmin`;
       element.style.backgroundSize = '80vmin';
 
@@ -108,4 +123,3 @@ function createTiles() {
   }
   return elements;
 }
-
