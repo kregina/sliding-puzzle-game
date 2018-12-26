@@ -11,14 +11,24 @@ The exercise is to implement a Sliding puzzle game.
 
 Features:
 
-* This is a bi-dimensional puzzle (4x4).
+* This is a bi-dimensional puzzle.
 * Each piece can move in 4 directions (up, down, left, right).
 * At start all pieces are scrambled.
 * Movement of a piece is just possible when there is a empty cell next to it.
 * Just one movement is possible each time.
 * Game ends when all pieces are in the right position, the image is shown clearly.
-* jQuery isn't used!
 * Just ES6 Vanilla Javascript is used.
+* Size and Dificult are configurable.
+
+### Using latest css features:
+- grid layout
+- custom properties (variables)
+
+### And latest javascript features
+- Destructuring Assignment
+- Arrow Functions
+- Constants
+
 
 ### Prerequisites
 
