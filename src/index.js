@@ -5,6 +5,8 @@ const ulSliding = document.getElementById('ulSliding');
 const startButton = document.getElementById('start');
 const solveButton = document.getElementById('solve');
 const shuffleButton = document.getElementById('shuffle');
+const fabButton = document.getElementById('fabButton');
+const fabList = document.getElementById('fabList');
 
 const moves = [];
 const dificulty = 5;
@@ -18,6 +20,7 @@ root.style.setProperty('--matrix-order', size);
 startButton.onclick = startGame;
 solveButton.onclick = solve;
 shuffleButton.onclick = shuffle;
+fabButton.onclick = toggleFabList;
 
 startGame();
 
@@ -38,6 +41,10 @@ function startGame() {
   solveButton.style.display = 'flex';
 
   shuffle(dificulty);
+}
+
+function toggleFabList() {
+  fabList.classList.toggle('open');
 }
 
 function tileClicked(e) {
@@ -61,18 +68,13 @@ function checkWin() {
     ulSliding.classList.add('win');
 
     blank.style.visibility = 'visible';
-
-    divWon.style.visibility = 'visible';
     divWon.style.opacity = 1;
 
     startButton.style.display = 'flex';
     shuffleButton.style.display = 'none';
     solveButton.style.display = 'none';
   }
-  setTimeout(() => {
-    divWon.style.visibility = 'hidden';
-    divWon.style.opacity = 0;
-  }, 2000);
+
 }
 
 // function checkTileWin(el, index) {

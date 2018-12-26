@@ -13,7 +13,7 @@
   --color-accent: #F44336;
   --color-accent-darker: #C62828;
 
-  --content-size: 80vmin;
+  --content-size: 88vmin;
 }
 
 /* Game Styles */
@@ -41,15 +41,18 @@ html,
 }
 
 .button {
+  border: none;
   border-radius: 50%;
   padding: 0.5em;
   color: #fff;
   display: flex;
   align-items: center;
   cursor: pointer;
+  outline: none;
   box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),
               0 4px 5px 0 rgba(0,0,0,.14),
               0 1px 10px 0 rgba(0,0,0,.12);
+
 }
 
 .button:hover {
@@ -65,12 +68,10 @@ html,
   align-items: center;
   justify-content: center;
   position: absolute;
-  visibility: hidden;
-  opacity: 0;
   width: 100%;
   height: 100%;
-  transition: visibility 0.5s linear, opacity 0.5s linear;
-  z-index: 999;
+  animation: blinker 1.7s cubic-bezier(.2, 0, 1, 1) alternate;
+  z-index: 1;
 }
 
 .win-message p {
@@ -130,8 +131,9 @@ header h1{
 
 .fabs{
   position: absolute;
-  right: 1.5em;
-  bottom: 1.5em;
+  right: 1em;
+  bottom: 1em;
+  z-index: 2;
 }
 
 .fabs .fab-button{
@@ -141,7 +143,7 @@ header h1{
 }
 
 .fabs .fab-list{
-  display: flex;
+  display: none;
   flex-direction: column-reverse;
   position: absolute;
   top: auto;
@@ -149,7 +151,11 @@ header h1{
   margin: 0 0.5em 4.5em 0.5em;
 }
 
-.fabs .fab-list a + a{
+.fabs .fab-list.open{
+  display: flex;
+}
+
+.fabs .fab-list button + button{
   margin-bottom: 0.5em;
 }
 
@@ -213,8 +219,18 @@ ul.sliding-puzzle li.blank {
   }
 
   .fabs .fab-list{
+    display: flex;
     right: 0;
     margin: 4em 0;
     min-width: 12.6em;
+  }
+}
+
+@keyframes blinker{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
