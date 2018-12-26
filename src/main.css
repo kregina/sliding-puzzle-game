@@ -161,6 +161,21 @@ ul.sliding-puzzle {
   padding: 0;
 }
 
+ul.sliding-puzzle.win{
+  position: relative;
+  grid-gap: 0;
+}
+
+ul.sliding-puzzle.win::after{
+  content: "";
+  cursor: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
 ul.sliding-puzzle.win li{
   box-shadow: none;
 }

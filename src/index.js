@@ -7,7 +7,7 @@ const solveButton = document.getElementById('solve');
 const shuffleButton = document.getElementById('shuffle');
 
 const moves = [];
-const dificulty = 2;
+const dificulty = 5;
 const size = 4;
 
 const tiles = createTiles(size);

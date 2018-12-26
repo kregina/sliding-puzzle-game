@@ -5,21 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>A Sliding Puzzle</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   </head>
   <body>
     <div class="container">
-      <div class="win-message" id="divWon">
-        <p>You Win!</p>
-      </div>
+      <header><h1>Media Monks Puzzle</h1></header>
+
+      <div class="win-message" id="divWon"><p>You Win!</p></div>
 
       <ul class="sliding-puzzle" id="ulSliding"></ul>
 
-      <div class="buttons">
-        A Sliding Puzzle |
-        <a id="start" class="start">Start new game</a>
-        <a id="shuffle" class="shuffle">Shuffle even more</a>
-        <a id="solve" class="solve">I give up</a>
+      <div class="fabs">
+        <a id="fabs" class="button fab-button"> <i class="material-icons">add</i> </a>
+
+        <div class="fab-list">
+          <a id="shuffle" class="button shuffle">
+            <i class="material-icons"> shuffle </i> <span>Shuffle even more</span>
+          </a>
+          <a id="solve" class="button solve">
+            <i class="material-icons">stop</i> <span>I give up</span>
+          </a>
+          <a id="start" class="button start">
+            <i class="material-icons">play_circle_filled</i> <span>Start new game</span>
+          </a>
+        </div>
       </div>
     </div>
   </body>
