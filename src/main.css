@@ -255,6 +255,12 @@ ul.sliding-puzzle li.blank {
   cursor: default;
 }
 
+@media (orientation: landscape) {
+  :root{
+    --content-size: 70vmin;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .button {
     background: transparent;
