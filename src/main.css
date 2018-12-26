@@ -19,9 +19,6 @@
   --content-size: 88vmin;
 }
 
-
-
-
 /* Game Styles */
 * {
   box-sizing: border-box;
@@ -79,9 +76,6 @@ html,
   align-items: center;
 }
 
-
-
-
 .win-message {
   display: none;
   align-items: center;
@@ -104,9 +98,6 @@ html,
   text-align: center;
 }
 
-
-
-
 footer{
   background: var(--color-primary);
   width: 100%;
@@ -115,10 +106,7 @@ footer{
               0 1px 10px 0 rgba(0,0,0,.12);
 }
 
-
-
-
-.sliding-puzzle {
+.game-area {
   width: var(--content-size);
   height: var(--content-size);
   display: grid;
@@ -128,14 +116,14 @@ footer{
   transition: all 0.1s ease-in-out;
 }
 
-.sliding-puzzle.win{
+.game-area.win{
   position: relative;
   grid-gap: 0;
 }
 
-.sliding-puzzle.win::after{
+.game-area.win::after{
   content: "";
-  cursor: none;
+  cursor: default;
   position: absolute;
   top: 0;
   left: 0;
@@ -143,11 +131,11 @@ footer{
   width: 100%;
 }
 
-.sliding-puzzle.win li{
+.game-area.win li{
   box-shadow: none;
 }
 
-.sliding-puzzle li {
+.game-area li {
   cursor: pointer;
   list-style: none;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
@@ -163,13 +151,10 @@ footer{
   background-position-y: calc(var(--start-row) * var(--content-size) / var(--matrix-order) * -1);
 }
 
-.sliding-puzzle li.blank {
+.game-area li.blank {
   visibility: hidden;
   cursor: default;
 }
-
-
-
 
 .actions{
   display: flex;
@@ -207,9 +192,6 @@ footer{
 .actions li pre{
   margin: 0;
 }
-
-
-
 
 .fabs{
   position: absolute;
@@ -288,14 +270,11 @@ footer{
   background: var(--color-warn-darker);
 }
 
-
-
 .fabs .fab-list.open,
 .sheet .sheet-list.open{
   display: flex;
   opacity: 1;
 }
-
 
 .sheet{
   background: #fff;
@@ -365,7 +344,7 @@ footer{
     --content-size: 70vmin;
   }
 
-  .sliding-puzzle{
+  .game-area{
     margin-top: 0;
   }
 }
@@ -380,8 +359,6 @@ footer{
     margin-left: 1em;
     display: inline;
   }
-
-
 
   .fabs{
     position: initial;
@@ -457,9 +434,6 @@ footer{
     z-index: 3;
   }
 }
-
-
-
 
 @keyframes fade {
   0%,100% { opacity: 0; }

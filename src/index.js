@@ -1,22 +1,33 @@
 import style from './main.css';
 
 const root = document.querySelector(':root');
-const gameArea = document.getElementById('ulSliding');
+
+const gameArea = document.getElementById('gameArea');
+const sheetList = document.getElementById('sheetList');
+const fabList = document.getElementById('fabList');
+const divWon = document.getElementById('divWon');
+
 const startButton = document.getElementById('start');
 const solveButton = document.getElementById('solve');
 const shuffleButton = document.getElementById('shuffle');
 const fabButton = document.getElementById('fabButton');
 const settingsButton = document.getElementById('settings');
-const sheetList = document.getElementById('sheetList');
-const fabList = document.getElementById('fabList');
-const divWon = document.getElementById('divWon');
-const movesDisplay = document.getElementById('movesDisplay');
-const timerDisplay = document.getElementById('timerDisplay');
-const sizeRange = document.getElementById('size');
-const dificultyRange = document.getElementById('dificult');
-const applyButton = document.getElementById('apply');
+
 const sizeLabel = document.getElementById('sizeLabel');
+const sizeInput = document.getElementById('size');
 const dificultyLabel = document.getElementById('dificultyLabel');
+const dificultyInput = document.getElementById('dificult');
+const movesLabel = document.getElementById('movesDisplay');
+const timerLabel = document.getElementById('timerDisplay');
+
+solveButton.onclick = solve;
+shuffleButton.onclick = shuffle;
+fabButton.onclick = toggleFabList;
+settingsButton.onclick = toggleSettings;
+sizeInput.oninput = updateSize;
+dificultyInput.oninput = updateDificulty;
+gameArea.onclick = tileClicked;
+startButton.onclick = startGameClicked;
 
 let size = 4;
 let dificulty = 5;
@@ -27,28 +38,7 @@ let startDate;
 let dateIntervalId;
 let tiles;
 let blank;
-root.style.setProperty('--matrix-order', size);
-
-startButton.onclick = startGame;
-solveButton.onclick = solve;
-shuffleButton.onclick = shuffle;
-fabButton.onclick = toggleFabList;
-settingsButton.onclick = toggleSettings;
-
-sizeRange.addEventListener('input', e => {
-  size = e.target.value;
-  sizeLabel.innerText = size;
-});
-
-dificultyRange.addEventListener('input', e => {
-  dificulty = e.target.value;
-  dificultyLabel.innerText = dificulty;
-});
-
-applyButton.addEventListener('click', e => {
-  bootstrap();
-  sheetList.classList.toggle('open');
-});
+let settingsChanged = false;
 
 bootstrap();
 
@@ -56,6 +46,7 @@ function bootstrap() {
   tiles = createTiles(size);
   blank = tiles[tiles.length - 1];
   blank.className = 'blank';
+  root.style.setProperty('--matrix-order', size);
 
   startGame();
 
@@ -64,6 +55,7 @@ function bootstrap() {
 	  return fragment;
 	}, document.createDocumentFragment());
 
+  gameArea.innerHTML = '';
 	gameArea.appendChild(fragment);
 }
 
@@ -71,9 +63,10 @@ function startGame() {
   moves = [];
   movesCount = 0;
   startDate = new Date();
+  clearInterval(dateIntervalId);
   dateIntervalId = setInterval(updateTimer, 100);
 
-  ulSliding.classList.remove('win');
+  gameArea.classList.remove('win');
 
   blank.style.visibility = 'hidden';
   divWon.style.display = 'none';
@@ -86,8 +79,21 @@ function startGame() {
   updateMoveCount();
 }
 
+function startGameClicked() {
+  sheetList.classList.toggle('open', false);
+  if(settingsChanged) {
+    settingsChanged = false;
+    bootstrap();
+  } else {
+    startGame();
+  }
+}
+
 function toggleSettings() {
-  sheetList.classList.toggle('open');
+  if(sheetList.classList.toggle('open')) {
+    solve();
+    endGame();
+  }
 }
 
 function toggleFabList() {
@@ -95,10 +101,14 @@ function toggleFabList() {
 }
 
 function tileClicked(e) {
-  if (canMove(e.target)) {
+  if (e.target != gameArea && canMove(e.target)) {
+    console.log(e.target);
     move(e.target);
     updateMoveCount();
-    checkWin();
+    if(checkWin()) {
+      divWon.style.display = 'flex';
+      divWon.style.visibility = 'visible';
+    }
   }
 }
 
@@ -113,22 +123,18 @@ function checkWin() {
 
   if (playerWon) {
     endGame();
+    return playerWon;
   }
 }
 
 function endGame() {
-  clearInterval(dateIntervalId);
-
-  ulSliding.classList.add('win');
-
+  gameArea.classList.add('win');
   blank.style.visibility = 'visible';
-
-  divWon.style.display = 'flex';
-  divWon.style.visibility = 'visible';
 
   startButton.style.display = 'flex';
   shuffleButton.style.display = 'none';
   solveButton.style.display = 'none';
+  clearInterval(dateIntervalId);
 }
 
 
@@ -198,8 +204,6 @@ function createTiles(size) {
       element.style.setProperty('--row', row);
       element.style.setProperty('--col', col);
 
-      element.onclick = tileClicked;
-
       elements.push(element);
     }
   }
@@ -212,9 +216,21 @@ function updateTimer() {
   let seconds = Math.floor( (timer/1000) % 60 ).toString().padStart(2, "0");
   let minutes = Math.floor( (timer/1000/60) % 60 ).toString().padStart(2, "0");
   let display = `${minutes}:${seconds}:${hundredSeconds}`;
-  timerDisplay.innerHTML = display;
+  timerLabel.innerText = display;
 }
 
 function updateMoveCount() {
-  movesDisplay.innerHTML = movesCount++;
+  movesLabel.innerText = movesCount++;
+}
+
+function updateSize(e) {
+  size = e.target.value;
+  sizeLabel.innerText = size;
+  settingsChanged = true;
+}
+
+function updateDificulty(e) {
+  dificulty = e.target.value;
+  dificultyLabel.innerText = dificulty;
+  settingsChanged = true;
 }

@@ -14,7 +14,7 @@
       <div class="container">
         <div class="win-message" id="divWon"><p>You Win!</p></div>
 
-        <ul class="sliding-puzzle" id="ulSliding"></ul>
+        <ul class="game-area" id="gameArea"></ul>
       </div>
 
       <footer>
@@ -42,25 +42,24 @@
             </li>
 
             <div id="fabList" class="fab-list">
-              <li id="solve">
-                <button class="solve button">
-                  <i class="material-icons">stop</i></span>
-                </button>
-              </li>
               <li id="shuffle">
                   <button class="shuffle button">
                     <i class="material-icons"> shuffle </i>
                   </button>
               </li>
-              <li id="settings">
-                <button class="settings button">
-                  <i class="material-icons">settings</i></span>
+              <li id="solve">
+                <button class="solve button">
+                  <i class="material-icons">stop</i></span>
                 </button>
               </li>
-
               <li id="start">
                 <button class="start button">
                   <i class="material-icons">play_circle_filled</i>
+                </button>
+              </li>
+              <li id="settings">
+                <button class="settings button">
+                  <i class="material-icons">settings</i></span>
                 </button>
               </li>
             </div>
@@ -70,17 +69,12 @@
         <div class="sheet">
           <ul id="sheetList" class="sheet-list">
             <li>
-              <button class="button" id="apply">
-                <i class="material-icons">play_circle_filled</i>
-              </button>
+              <pre>Size: <span id="sizeLabel">4</span></pre>
+              <input class="slider" type="range" id="size" min="2" max="15" step="1" value="4"/>
             </li>
             <li>
-              <pre>Size <span id="sizeLabel"></span></pre>
-              <input class="slider" type="range" id="size" min="2" max="15" step="1"/>
-            </li>
-            <li>
-              <pre>Dificult <span id="dificultyLabel"></span></pre>
-              <input class="slider" type="range" id="dificult" min="2" max="15" step="1"/>
+              <pre>Dificulty: <span id="dificultyLabel">5</span> moves</pre>
+              <input class="slider" type="range" id="dificult" min="2" max="15" step="1" value="5"/>
             </li>
           </ul>
         </div>
