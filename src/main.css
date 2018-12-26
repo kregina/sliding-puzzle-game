@@ -189,7 +189,7 @@ ul.sliding-puzzle li {
 
   grid-row: calc(var(--row) + 1);
   grid-column: calc(var(--col) + 1);
-  background-image: url("/assets/monks.jpg");
+  background-image: url("assets/monks.jpg");
   background-repeat: no-repeat;
   background-size: var(--content-size);
   background-position-x: calc(var(--start-col) * var(--content-size) / var(--matrix-order) * -1);
