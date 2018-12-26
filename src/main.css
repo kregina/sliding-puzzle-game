@@ -101,6 +101,8 @@ html,
 footer{
   background: var(--color-primary);
   width: 100%;
+  position: fixed;
+  bottom: 0;
   box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),
               0 4px 5px 0 rgba(0,0,0,.14),
               0 1px 10px 0 rgba(0,0,0,.12);
@@ -287,7 +289,7 @@ footer{
 }
 
 .sheet .sheet-list li{
-  padding: 1em 1em 1.5em;
+  padding: 1em 1.5em 1.5em;
 }
 
 .sheet-list li pre{
@@ -339,7 +341,7 @@ footer{
 
 
 
-@media (orientation: landscape) {
+@media (orientation: landscape) and (max-width: 768px) {
   :root{
     --content-size: 70vmin;
   }
@@ -352,7 +354,7 @@ footer{
 @media only screen and (min-width: 768px) {
   .button {
     border-radius: 0.2em;
-    padding: 0.5em 1em;
+    padding: 0.5em 0 0.5em 1em;
   }
 
   .button span{
@@ -430,8 +432,11 @@ footer{
   footer{
     border-radius: 0.2em 0.2em 0 0;
     justify-content: space-around;
-    width: 60%;
+    margin: auto;
+    width: 40%;
     z-index: 3;
+    left: 50%;
+    margin-left: -20%;
   }
 }
 
