@@ -35,6 +35,7 @@ function startGame() {
   ulSliding.classList.remove('win');
 
   blank.style.visibility = 'hidden';
+  divWon.style.display = 'none';
 
   startButton.style.display = 'none';
   shuffleButton.style.display = 'flex';
@@ -68,7 +69,9 @@ function checkWin() {
     ulSliding.classList.add('win');
 
     blank.style.visibility = 'visible';
-    divWon.style.opacity = 1;
+
+    divWon.style.display = 'flex';
+    divWon.style.visibility = 'visible';
 
     startButton.style.display = 'flex';
     shuffleButton.style.display = 'none';
