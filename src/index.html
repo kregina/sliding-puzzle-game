@@ -11,27 +11,54 @@
   </head>
   <body>
     <div class="container">
-      <header><h1>Media Monks Puzzle</h1></header>
+      <div class="container">
+        <div class="win-message" id="divWon"><p>You Win!</p></div>
 
-      <div class="win-message" id="divWon"><p>You Win!</p></div>
-
-      <ul class="sliding-puzzle" id="ulSliding"></ul>
-
-      <div class="fabs">
-        <button id="fabButton" class="button fab-button"> <i class="material-icons">add</i> </button>
-
-        <div id="fabList" class="fab-list">
-          <button id="shuffle" class="button shuffle">
-            <i class="material-icons"> shuffle </i> <span>Shuffle even more</span>
-          </button>
-          <button id="solve" class="button solve">
-            <i class="material-icons">stop</i> <span>I give up</span>
-          </button>
-          <button id="start" class="button start">
-            <i class="material-icons">play_circle_filled</i> <span>Start new game</span>
-          </button>
-        </div>
+        <ul class="sliding-puzzle" id="ulSliding"></ul>
       </div>
+
+      <footer>
+        <ul class="title">
+          <li>Media Monks</li>
+          <li><small><pre>Sliding Puzzle</pre></small></li>
+        </ul>
+
+        <ul class="moves">
+          <li><small>Moves</small></li>
+          <li><small>12</small></li>
+        </ul>
+
+        <ul class="timer">
+          <li><small>Timer</small></li>
+          <li><small>2:00</small></li>
+        </ul>
+
+        <ul class="fabs">
+          <li>
+              <button id="fabButton" class="button fab-button">
+                <i class="material-icons">add</i>
+              </button>
+          </li>
+
+          <div id="fabList" class="fab-list">
+            <li>
+              <button id="solve" class="button solve">
+                <i class="material-icons">stop</i> <span>I give up</span>
+              </button>
+            </li>
+            <li>
+                <button id="shuffle" class="button shuffle">
+                  <i class="material-icons"> shuffle </i> <span>Shuffle even more</span>
+                </button>
+            </li>
+            <li>
+              <button id="start" class="button start">
+                <i class="material-icons">play_circle_filled</i> <span>Start new game</span>
+              </button>
+            </li>
+          </div>
+        </ul>
+      </footer>
     </div>
   </body>
 </html>
