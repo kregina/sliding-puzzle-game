@@ -190,6 +190,7 @@ footer li pre{
 .fabs .fab-list li + li{
   margin-top: 0.5em;
 }
+
 .fabs .fab-list li{
   animation: fadeIn 0.2s ease-in both;
 }
@@ -256,6 +257,7 @@ ul.sliding-puzzle li.blank {
 
 @media only screen and (min-width: 768px) {
   .button {
+    background: transparent;
     border-radius: 0.2em;
     padding: 0.5em 1em;
   }
@@ -265,11 +267,65 @@ ul.sliding-puzzle li.blank {
     display: inline;
   }
 
+  .button:hover{
+    background: transparent;
+  }
+
+  .start {
+    color: var(--color-success);
+  }
+
+  .start:hover {
+    color: var(--color-success-darker);
+  }
+
+  .shuffle {
+    color: var(--color-info);
+  }
+
+  .shuffle:hover {
+    color: var(--color-info-darker);
+  }
+
+  .solve {
+    color: var(--color-accent);
+  }
+
+  .solve:hover {
+    color: var(--color-accent-darker);
+  }
+
+  .fabs{
+    position: initial;
+  }
+
+  .fabs .fab-button{
+    display: none;
+  }
+
   .fabs .fab-list{
     display: flex;
+    flex-direction: row;
+    align-items: center;
     right: 0;
-    margin: 4em 0;
+    margin: 0;
     min-width: 12.6em;
+    opacity: 1;
+    position: initial;
+  }
+
+  .fabs .fab-list li{
+    animation: none;
+  }
+
+  .fabs .fab-list li + li{
+    margin: 0;
+  }
+
+  footer{
+    border-radius: 0.2em 0.2em 0 0;
+    justify-content: space-around;
+    width: 50%;
   }
 }
 
