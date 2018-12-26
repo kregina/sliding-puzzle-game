@@ -1,19 +1,29 @@
+/* CSS variables */
 :root {
-  --color-background: #ecf0f1;
+  --color-background: #EEEEEE;
+
+  --color-primary: #000;
 
   --color-info: #2196f3;
   --color-info-darker: #1565c0;
 
-  --color-primary: #4caf50;
-  --color-darker: #2e7d32;
+  --color-success: #4caf50;
+  --color-success-darker: #2e7d32;
 
-  --color-accent: #e91e63;
-  --color-accent-darker: #ad1457;
+  --color-accent: #F44336;
+  --color-accent-darker: #C62828;
+
+  --content-size: 80vmin;
 }
 
+/* Game Styles */
 * {
   box-sizing: border-box;
   transition: all 0.1s ease-in-out;
+}
+
+li{
+  list-style: none;
 }
 
 body {
@@ -30,11 +40,24 @@ html,
   height: 100%;
 }
 
-.container {
+.button {
+  border-radius: 50%;
+  padding: 0.5em;
+  color: #fff;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),
+              0 4px 5px 0 rgba(0,0,0,.14),
+              0 1px 10px 0 rgba(0,0,0,.12);
+}
+
+.button:hover {
+  transition: color 0.8s ease;
+}
+
+.button span{
+  display: none;
 }
 
 .win-message {
@@ -51,7 +74,7 @@ html,
 }
 
 .win-message p {
-  background: var(--color-primary);
+  background: var(--color-success);
   line-height: 2em;
   color: #fff;
   font-size: 3em;
@@ -59,9 +82,80 @@ html,
   text-align: center;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header{
+  background: var(--color-primary);
+  padding: 1em 1.5em;
+  width: 100%;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),
+              0 4px 5px 0 rgba(0,0,0,.14),
+              0 1px 10px 0 rgba(0,0,0,.12);
+}
+
+header h1{
+  color: #fff;
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 300;
+}
+
+.start {
+  background: var(--color-success);
+}
+
+.start:hover {
+  background: var(--color-success-darker);
+}
+
+.shuffle {
+  background: var(--color-info);
+}
+
+.shuffle:hover {
+  background: var(--color-info-darker);
+}
+
+.solve {
+  background: var(--color-accent);
+}
+
+.solve:hover {
+  background: var(--color-accent-darker);
+}
+
+.fabs{
+  position: absolute;
+  right: 1.5em;
+  bottom: 1.5em;
+}
+
+.fabs .fab-button{
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  padding: 1em;
+}
+
+.fabs .fab-list{
+  display: flex;
+  flex-direction: column-reverse;
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  margin: 0 0.5em 4.5em 0.5em;
+}
+
+.fabs .fab-list a + a{
+  margin-bottom: 0.5em;
+}
+
 ul.sliding-puzzle {
-  width: 80vmin;
-  height: 80vmin;
+  width: var(--content-size);
+  height: var(--content-size);
   display: grid;
   grid-gap: .5em;
   padding: 0;
@@ -71,53 +165,41 @@ ul.sliding-puzzle.win li{
   box-shadow: none;
 }
 
-li {
+ul.sliding-puzzle li {
   cursor: pointer;
   list-style: none;
-  background-repeat: no-repeat;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
               0 8px 10px 1px rgba(0, 0, 0, 0.14),
               0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+  grid-row: calc(var(--row) + 1);
+  grid-column: calc(var(--col) + 1);
+  background-image: url("/assets/monks.jpg");
+  background-repeat: no-repeat;
+  background-size: var(--content-size);
+  background-position-x: calc(var(--start-col) * var(--content-size) / var(--matrix-order) * -1);
+  background-position-y: calc(var(--start-row) * var(--content-size) / var(--matrix-order) * -1);
 }
 
-li.blank {
+ul.sliding-puzzle li.blank {
   visibility: hidden;
   cursor: default;
 }
 
+@media only screen and (min-width: 768px) {
+  .button {
+    border-radius: 0.2em;
+    padding: 0.5em 1em;
+  }
 
-a {
-  cursor: pointer;
-}
+  .button span{
+    margin-left: 1em;
+    display: inline;
+  }
 
-a:hover {
-  transition: color 0.8s ease;
-}
-
-.buttons {
-  padding: 2em;
-}
-
-.start {
-  color: var(--color-info);
-}
-
-.start:hover {
-  color: var(--color-info-darker);
-}
-
-.shuffle {
-  color: var(--color-accent);
-}
-
-.shuffle:hover {
-  color: var(--color-accent-darker);
-}
-
-.solve {
-  color: var(--color-primary);
-}
-
-.solve:hover {
-  color: var(--color-primary-darker);
+  .fabs .fab-list{
+    right: 0;
+    margin: 4em 0;
+    min-width: 12.6em;
+  }
 }

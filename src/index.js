@@ -1,16 +1,19 @@
 import style from './main.css';
 
-const size = 4;
-const dificulty = 8;
-const moves = [];
+const root = document.querySelector(':root');
 const ulSliding = document.getElementById('ulSliding');
 const startButton = document.getElementById('start');
 const solveButton = document.getElementById('solve');
 const shuffleButton = document.getElementById('shuffle');
-const tiles = createTiles(size);
 
+const moves = [];
+const dificulty = 2;
+const size = 4;
+
+const tiles = createTiles(size);
 const blank = tiles[tiles.length - 1];
 blank.className = 'blank';
+root.style.setProperty('--matrix-order', size);
 
 startButton.onclick = startGame;
 solveButton.onclick = solve;
@@ -26,14 +29,13 @@ const fragment = tiles.reduce((fragment, element) => {
 ulSliding.appendChild(fragment);
 
 function startGame() {
-  ulSliding.style.gridGap = '0.5em';
   ulSliding.classList.remove('win');
 
   blank.style.visibility = 'hidden';
 
   startButton.style.display = 'none';
-  shuffleButton.style.display = 'block';
-  solveButton.style.display = 'block';
+  shuffleButton.style.display = 'flex';
+  solveButton.style.display = 'flex';
 
   shuffle(dificulty);
 }
@@ -48,7 +50,7 @@ function tileClicked(e) {
 
 function checkWin() {
   const tileStatuses = tiles
-    .map((el, i) => checkTileWin(size, i, el.style.gridRowStart, el.style.gridColumnStart))
+    .map(checkTileWin)
     .map((win, i) => [win, tiles[i]]);
 
   tileStatuses.forEach(([win, tile]) => tile.classList.toggle('win', win));
@@ -56,7 +58,6 @@ function checkWin() {
   const playerWon = tileStatuses.every(([win]) => win);
   const divWon = document.getElementById('divWon');
   if (playerWon) {
-    ulSliding.style.gridGap = '0';
     ulSliding.classList.add('win');
 
     blank.style.visibility = 'visible';
@@ -64,7 +65,7 @@ function checkWin() {
     divWon.style.visibility = 'visible';
     divWon.style.opacity = 1;
 
-    startButton.style.display = 'block';
+    startButton.style.display = 'flex';
     shuffleButton.style.display = 'none';
     solveButton.style.display = 'none';
   }
@@ -74,8 +75,15 @@ function checkWin() {
   }, 2000);
 }
 
-function checkTileWin(size, index, row, col) {
-  return index == (row - 1) * size + (col - 1);
+// function checkTileWin(el, index) {
+//   const row = el.style.getPropertyValue('--row');
+//   const col = el.style.getPropertyValue('--col');
+//   return index == row * size + col;
+// }
+
+function checkTileWin(el) {
+  return el.style.getPropertyValue('--col') === el.style.getPropertyValue('--start-col')
+    && el.style.getPropertyValue('--row') === el.style.getPropertyValue('--start-row')
 }
 
 function shuffle() {
@@ -101,8 +109,8 @@ function solve() {
 }
 
 function canMove(target) {
-  const deltaX = Math.abs(target.style.gridColumnStart - blank.style.gridColumnStart);
-  const deltaY = Math.abs(target.style.gridRowStart - blank.style.gridRowStart);
+  const deltaX = Math.abs(target.style.getPropertyValue('--col') - blank.style.getPropertyValue('--col'));
+  const deltaY = Math.abs(target.style.getPropertyValue('--row') - blank.style.getPropertyValue('--row'));
   const delta = deltaX + deltaY;
   return delta === 1;
 }
@@ -111,24 +119,29 @@ function notEqualToLastMove(tile) {
   return tile !== moves[moves.length - 1]
 }
 
-function swap(a, b) {
-  [a.style.gridRow, b.style.gridRow] = [b.style.gridRow, a.style.gridRow];
-  [a.style.gridColumn, b.style.gridColumn] = [b.style.gridColumn, a.style.gridColumn];
+function swap(...tiles) {
+  tiles
+    .map((el, i) => [
+      (tiles.length - 1) - i,
+      el.style.getPropertyValue('--row'),
+      el.style.getPropertyValue('--col')
+    ])
+    .forEach(([opositeIndex, row, col]) => {
+      tiles[opositeIndex].style.setProperty('--row', row);
+      tiles[opositeIndex].style.setProperty('--col', col);
+    });
 }
 
-function createTiles() {
+function createTiles(size) {
   const elements = [];
-  const sizePx = 80 / size;
-  for (let row = 1; row <= size; row++) {
-    for (let col = 1; col <= size; col++) {
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
       const element = document.createElement('li');
 
-      element.style.gridRow = row;
-      element.style.gridColumn = col;
-      element.style.backgroundImage = "url('./assets/monks.jpg')";
-      element.style.backgroundPositionX = `-${(col - 1) * sizePx}vmin`;
-      element.style.backgroundPositionY = `-${(row - 1) * sizePx}vmin`;
-      element.style.backgroundSize = '80vmin';
+      element.style.setProperty('--start-row', row);
+      element.style.setProperty('--start-col', col);
+      element.style.setProperty('--row', row);
+      element.style.setProperty('--col', col);
 
       element.onclick = tileClicked;
 
