@@ -133,7 +133,7 @@ function swap(...tiles) {
 }
 
 function createTiles(size) {
-  const elements = [];
+  const elements = new Array(Math.sqrt(size));
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
       const element = document.createElement('li');
