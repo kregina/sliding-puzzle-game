@@ -7,10 +7,17 @@ const solveButton = document.getElementById('solve');
 const shuffleButton = document.getElementById('shuffle');
 const fabButton = document.getElementById('fabButton');
 const fabList = document.getElementById('fabList');
+const divWon = document.getElementById('divWon');
+const movesDisplay = document.getElementById('movesDisplay');
+const timerDisplay = document.getElementById('timerDisplay');
 
-const moves = [];
-const dificulty = 5;
-const size = 4;
+let size = 4;
+let dificulty = 5;
+let moves;
+let movesCount;
+let timer;
+let startDate;
+let dateIntervalId;
 
 const tiles = createTiles(size);
 const blank = tiles[tiles.length - 1];
@@ -32,6 +39,11 @@ const fragment = tiles.reduce((fragment, element) => {
 ulSliding.appendChild(fragment);
 
 function startGame() {
+  moves = [];
+  movesCount = 0;
+  startDate = new Date();
+  dateIntervalId = setInterval(updateTimer, 100);
+
   ulSliding.classList.remove('win');
 
   blank.style.visibility = 'hidden';
@@ -42,6 +54,7 @@ function startGame() {
   solveButton.style.display = 'flex';
 
   shuffle(dificulty);
+  updateMoveCount();
 }
 
 function toggleFabList() {
@@ -50,8 +63,8 @@ function toggleFabList() {
 
 function tileClicked(e) {
   if (canMove(e.target)) {
-    swap(e.target, blank);
-    moves.push(e.target);
+    move(e.target);
+    updateMoveCount();
     checkWin();
   }
 }
@@ -64,27 +77,27 @@ function checkWin() {
   tileStatuses.forEach(([win, tile]) => tile.classList.toggle('win', win));
 
   const playerWon = tileStatuses.every(([win]) => win);
-  const divWon = document.getElementById('divWon');
+
   if (playerWon) {
-    ulSliding.classList.add('win');
-
-    blank.style.visibility = 'visible';
-
-    divWon.style.display = 'flex';
-    divWon.style.visibility = 'visible';
-
-    startButton.style.display = 'flex';
-    shuffleButton.style.display = 'none';
-    solveButton.style.display = 'none';
+    endGame();
   }
-
 }
 
-// function checkTileWin(el, index) {
-//   const row = el.style.getPropertyValue('--row');
-//   const col = el.style.getPropertyValue('--col');
-//   return index == row * size + col;
-// }
+function endGame() {
+  clearInterval(dateIntervalId);
+
+  ulSliding.classList.add('win');
+
+  blank.style.visibility = 'visible';
+
+  divWon.style.display = 'flex';
+  divWon.style.visibility = 'visible';
+
+  startButton.style.display = 'flex';
+  shuffleButton.style.display = 'none';
+  solveButton.style.display = 'none';
+}
+
 
 function checkTileWin(el) {
   return el.style.getPropertyValue('--col') === el.style.getPropertyValue('--start-col')
@@ -99,8 +112,7 @@ function shuffle() {
 
     const randomIndex = Math.floor(Math.random() * availableMoves.length);
     const randomTile = availableMoves[randomIndex];
-    moves.push(randomTile);
-    swap(randomTile, blank);
+    move(randomTile);
   }
   checkWin();
 }
@@ -113,6 +125,11 @@ function solve() {
   checkWin();
 }
 
+function move(target) {
+  swap(target, blank);
+  moves.push(target);
+}
+
 function canMove(target) {
   const deltaX = Math.abs(target.style.getPropertyValue('--col') - blank.style.getPropertyValue('--col'));
   const deltaY = Math.abs(target.style.getPropertyValue('--row') - blank.style.getPropertyValue('--row'));
@@ -121,13 +138,13 @@ function canMove(target) {
 }
 
 function notEqualToLastMove(tile) {
-  return tile !== moves[moves.length - 1]
+  return tile !== moves[moves.length - 1];
 }
 
 function swap(...tiles) {
   tiles
     .map((el, i) => [
-      (tiles.length - 1) - i,
+      tiles.length - 1 - i,
       el.style.getPropertyValue('--row'),
       el.style.getPropertyValue('--col')
     ])
@@ -154,4 +171,17 @@ function createTiles(size) {
     }
   }
   return elements;
+}
+
+function updateTimer() {
+  timer = new Date().getTime() - startDate.getTime();
+  let hundredSeconds = Math.floor( (timer/10) % 100 ).toString().padStart(2, "0");
+  let seconds = Math.floor( (timer/1000) % 60 ).toString().padStart(2, "0");
+  let minutes = Math.floor( (timer/1000/60) % 60 ).toString().padStart(2, "0");
+  let display = `${minutes}:${seconds}:${hundredSeconds}`;
+  timerDisplay.innerHTML = display;
+}
+
+function updateMoveCount() {
+  movesDisplay.innerHTML = movesCount++;
 }
