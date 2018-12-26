@@ -13,12 +13,23 @@
   --color-accent: #F44336;
   --color-accent-darker: #C62828;
 
+  --color-warn: #FF5722;
+  --color-warn-darker: #D84315;
+
   --content-size: 88vmin;
 }
+
+
+
 
 /* Game Styles */
 * {
   box-sizing: border-box;
+}
+
+ul{
+  padding: 0;
+  margin: 0;
 }
 
 li{
@@ -62,6 +73,15 @@ html,
   display: none;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+
 .win-message {
   display: none;
   align-items: center;
@@ -84,83 +104,118 @@ html,
   text-align: center;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
+
 
 footer{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   background: var(--color-primary);
-  padding: 1em 1.5em;
   width: 100%;
   box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),
               0 4px 5px 0 rgba(0,0,0,.14),
               0 1px 10px 0 rgba(0,0,0,.12);
 }
 
-footer h1{
+
+
+
+.sliding-puzzle {
+  width: var(--content-size);
+  height: var(--content-size);
+  display: grid;
+  grid-gap: .5em;
+  padding: 0;
+  margin-top: 2em;
+  transition: all 0.1s ease-in-out;
+}
+
+.sliding-puzzle.win{
+  position: relative;
+  grid-gap: 0;
+}
+
+.sliding-puzzle.win::after{
+  content: "";
+  cursor: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.sliding-puzzle.win li{
+  box-shadow: none;
+}
+
+.sliding-puzzle li {
+  cursor: pointer;
+  list-style: none;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+  grid-row: calc(var(--row) + 1);
+  grid-column: calc(var(--col) + 1);
+  background-image: url("assets/monks.jpg");
+  background-repeat: no-repeat;
+  background-size: var(--content-size);
+  background-position-x: calc(var(--start-col) * var(--content-size) / var(--matrix-order) * -1);
+  background-position-y: calc(var(--start-row) * var(--content-size) / var(--matrix-order) * -1);
+}
+
+.sliding-puzzle li.blank {
+  visibility: hidden;
+  cursor: default;
+}
+
+
+
+
+.actions{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1em 1.5em;
+  position: relative;
+}
+
+.actions h1{
   color: #fff;
   margin: 0;
   font-size: 1.2em;
   font-weight: 300;
 }
 
-footer ul{
+.actions ul{
   display: flex;
   flex-direction: column;
-  padding: 0;
-  margin: 0;
 }
 
-footer ul.moves,
-footer ul.timer{
+.actions .moves,
+.actions .timer{
   text-align: center;
 }
 
-footer ul + ul {
-  margin-left: 1.5em;
+.actions ul + ul {
+  padding-left: 2.5em;
 }
 
-footer ul li{
+.actions ul li{
   color: #fff;
 }
 
-footer li pre{
+.actions li pre{
   margin: 0;
 }
 
-.start {
-  background: var(--color-success);
-}
 
-.start:hover {
-  background: var(--color-success-darker);
-}
 
-.shuffle {
-  background: var(--color-info);
-}
-
-.shuffle:hover {
-  background: var(--color-info-darker);
-}
-
-.solve {
-  background: var(--color-accent);
-}
-
-.solve:hover {
-  background: var(--color-accent-darker);
-}
 
 .fabs{
   position: absolute;
   right: 1em;
-  bottom: 1.5em;
+  bottom: 2.5em;
+  margin-left: auto;
   z-index: 2;
 }
 
@@ -182,11 +237,6 @@ footer li pre{
   opacity: 0;
 }
 
-.fabs .fab-list.open{
-  display: flex;
-  opacity: 1;
-}
-
 .fabs .fab-list li + li{
   margin-top: 0.5em;
 }
@@ -206,64 +256,122 @@ footer li pre{
 	animation-delay: 0.1s;
 }
 
-ul.sliding-puzzle {
-  width: var(--content-size);
-  height: var(--content-size);
-  display: grid;
-  grid-gap: .5em;
-  padding: 0;
-  transition: all 0.1s ease-in-out;
+.fab-list .start {
+  background: var(--color-success);
 }
 
-ul.sliding-puzzle.win{
-  position: relative;
-  grid-gap: 0;
+.fab-list .start:hover {
+  background: var(--color-success-darker);
 }
 
-ul.sliding-puzzle.win::after{
-  content: "";
-  cursor: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+.fab-list .shuffle {
+  background: var(--color-info);
+}
+
+.fab-list .shuffle:hover {
+  background: var(--color-info-darker);
+}
+
+.fab-list .solve {
+  background: var(--color-accent);
+}
+
+.fab-list .solve:hover {
+  background: var(--color-accent-darker);
+}
+
+.fab-list .settings {
+  background: var(--color-warn);
+}
+
+.fab-list .settings:hover {
+  background: var(--color-warn-darker);
+}
+
+
+
+.fabs .fab-list.open,
+.sheet .sheet-list.open{
+  display: flex;
+  opacity: 1;
+}
+
+
+.sheet{
+  background: #fff;
+}
+
+.sheet .sheet-list{
+  display: none;
+  flex-direction: column;
+  opacity: 0;
+}
+
+.sheet .sheet-list li{
+  padding: 1em 1em 1.5em;
+}
+
+.sheet-list li pre{
+  margin-top: 0;
+}
+
+.sheet-list li .button{
+  background: var(--color-success);
+  float: right;
+}
+
+.sheet-list li + li{
+  border-top: solid 1px rgba(0, 0, 0, 0.14);
+}
+
+.slider {
+  -webkit-appearance: none;
   width: 100%;
+  height: 2px;
+  background: var(--color-warn);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
 
-ul.sliding-puzzle.win li{
-  box-shadow: none;
+.slider:hover {
+  opacity: 1;
 }
 
-ul.sliding-puzzle li {
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1em;
+  height: 1em;
+  background: var(--color-warn);
+  border-radius: 50%;
   cursor: pointer;
-  list-style: none;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-
-  grid-row: calc(var(--row) + 1);
-  grid-column: calc(var(--col) + 1);
-  background-image: url("assets/monks.jpg");
-  background-repeat: no-repeat;
-  background-size: var(--content-size);
-  background-position-x: calc(var(--start-col) * var(--content-size) / var(--matrix-order) * -1);
-  background-position-y: calc(var(--start-row) * var(--content-size) / var(--matrix-order) * -1);
 }
 
-ul.sliding-puzzle li.blank {
-  visibility: hidden;
-  cursor: default;
+.slider::-moz-range-thumb {
+  width: 1em;
+  height: 1em;
+  background: var(--color-warn);
+  border-radius: 50%;
+  cursor: pointer;
 }
+
+
+
 
 @media (orientation: landscape) {
   :root{
     --content-size: 70vmin;
   }
+
+  .sliding-puzzle{
+    margin-top: 0;
+  }
 }
 
 @media only screen and (min-width: 768px) {
   .button {
-    background: transparent;
     border-radius: 0.2em;
     padding: 0.5em 1em;
   }
@@ -273,33 +381,7 @@ ul.sliding-puzzle li.blank {
     display: inline;
   }
 
-  .button:hover{
-    background: transparent;
-  }
 
-  .start {
-    color: var(--color-success);
-  }
-
-  .start:hover {
-    color: var(--color-success-darker);
-  }
-
-  .shuffle {
-    color: var(--color-info);
-  }
-
-  .shuffle:hover {
-    color: var(--color-info-darker);
-  }
-
-  .solve {
-    color: var(--color-accent);
-  }
-
-  .solve:hover {
-    color: var(--color-accent-darker);
-  }
 
   .fabs{
     position: initial;
@@ -315,7 +397,6 @@ ul.sliding-puzzle li.blank {
     align-items: center;
     right: 0;
     margin: 0;
-    min-width: 12.6em;
     opacity: 1;
     position: initial;
   }
@@ -328,12 +409,57 @@ ul.sliding-puzzle li.blank {
     margin: 0;
   }
 
+  .fab-list .start, .fab-list .start:hover,
+  .fab-list .shuffle, .fab-list .shuffle:hover,
+  .fab-list .solve, .fab-list .solve:hover,
+  .fab-list .settings, .fab-list .settings:hover{
+    background: transparent;
+  }
+
+  .fab-list .start {
+    color: var(--color-success);
+  }
+
+  .fab-list .start:hover {
+    color: var(--color-success-darker);
+  }
+
+  .fab-list .shuffle {
+    color: var(--color-info);
+  }
+
+  .fab-list .shuffle:hover {
+    color: var(--color-info-darker);
+  }
+
+  .fab-list .solve {
+    color: var(--color-accent);
+  }
+
+  .fab-list .solve:hover {
+    color: var(--color-accent-darker);
+  }
+
+  .fab-list .settings {
+    color: var(--color-warn);
+  }
+
+  .fab-list .settings:hover {
+    color: var(--color-warn-darker);
+  }
+
+
+
   footer{
     border-radius: 0.2em 0.2em 0 0;
     justify-content: space-around;
-    width: 50%;
+    width: 60%;
+    z-index: 3;
   }
 }
+
+
+
 
 @keyframes fade {
   0%,100% { opacity: 0; }

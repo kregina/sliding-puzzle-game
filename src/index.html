@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>A Sliding Puzzle</title>
+    <title>Media Monks Sliding Puzzle</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   </head>
@@ -18,46 +18,72 @@
       </div>
 
       <footer>
-        <ul class="title">
-          <li>Media Monks</li>
-          <li><small><pre>Sliding Puzzle</pre></small></li>
-        </ul>
+        <div class="actions">
+          <ul class="title">
+            <li>Media Monks</li>
+            <li><small><pre>Sliding Puzzle</pre></small></li>
+          </ul>
 
-        <ul class="fabs">
-          <li>
+          <ul class="moves">
+            <li><small>Moves</small></li>
+            <li><small id="movesDisplay"></small></li>
+          </ul>
+
+          <ul class="timer">
+            <li><small>Timer</small></li>
+            <li><small id="timerDisplay"></small></li>
+          </ul>
+
+          <ul class="fabs">
+            <li>
               <button id="fabButton" class="button fab-button">
                 <i class="material-icons">add</i>
               </button>
-          </li>
+            </li>
 
-          <div id="fabList" class="fab-list">
-            <li id="solve">
-              <button class="button solve">
-                <i class="material-icons">stop</i></span>
-              </button>
-            </li>
-            <li id="shuffle">
-                <button class="button shuffle">
-                  <i class="material-icons"> shuffle </i>
+            <div id="fabList" class="fab-list">
+              <li id="solve">
+                <button class="solve button">
+                  <i class="material-icons">stop</i></span>
                 </button>
-            </li>
-            <li id="start">
-              <button class="button start">
+              </li>
+              <li id="shuffle">
+                  <button class="shuffle button">
+                    <i class="material-icons"> shuffle </i>
+                  </button>
+              </li>
+              <li id="settings">
+                <button class="settings button">
+                  <i class="material-icons">settings</i></span>
+                </button>
+              </li>
+
+              <li id="start">
+                <button class="start button">
+                  <i class="material-icons">play_circle_filled</i>
+                </button>
+              </li>
+            </div>
+          </ul>
+        </div>
+
+        <div class="sheet">
+          <ul id="sheetList" class="sheet-list">
+            <li>
+              <button class="button" id="apply">
                 <i class="material-icons">play_circle_filled</i>
               </button>
             </li>
-          </div>
-        </ul>
-
-        <ul class="moves">
-          <li><small>Moves</small></li>
-          <li><small id="movesDisplay"></small></li>
-        </ul>
-
-        <ul class="timer">
-          <li><small>Timer</small></li>
-          <li><small id="timerDisplay"></small></li>
-        </ul>
+            <li>
+              <pre>Size <span id="sizeLabel"></span></pre>
+              <input class="slider" type="range" id="size" min="2" max="15" step="1"/>
+            </li>
+            <li>
+              <pre>Dificult <span id="dificultyLabel"></span></pre>
+              <input class="slider" type="range" id="dificult" min="2" max="15" step="1"/>
+            </li>
+          </ul>
+        </div>
       </footer>
     </div>
   </body>

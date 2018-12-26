@@ -1,15 +1,22 @@
 import style from './main.css';
 
 const root = document.querySelector(':root');
-const ulSliding = document.getElementById('ulSliding');
+const gameArea = document.getElementById('ulSliding');
 const startButton = document.getElementById('start');
 const solveButton = document.getElementById('solve');
 const shuffleButton = document.getElementById('shuffle');
 const fabButton = document.getElementById('fabButton');
+const settingsButton = document.getElementById('settings');
+const sheetList = document.getElementById('sheetList');
 const fabList = document.getElementById('fabList');
 const divWon = document.getElementById('divWon');
 const movesDisplay = document.getElementById('movesDisplay');
 const timerDisplay = document.getElementById('timerDisplay');
+const sizeRange = document.getElementById('size');
+const dificultyRange = document.getElementById('dificult');
+const applyButton = document.getElementById('apply');
+const sizeLabel = document.getElementById('sizeLabel');
+const dificultyLabel = document.getElementById('dificultyLabel');
 
 let size = 4;
 let dificulty = 5;
@@ -18,25 +25,47 @@ let movesCount;
 let timer;
 let startDate;
 let dateIntervalId;
-
-const tiles = createTiles(size);
-const blank = tiles[tiles.length - 1];
-blank.className = 'blank';
+let tiles;
+let blank;
 root.style.setProperty('--matrix-order', size);
 
 startButton.onclick = startGame;
 solveButton.onclick = solve;
 shuffleButton.onclick = shuffle;
 fabButton.onclick = toggleFabList;
+settingsButton.onclick = toggleSettings;
 
-startGame();
+sizeRange.addEventListener('input', e => {
+  size = e.target.value;
+  sizeLabel.innerText = size;
+});
 
-const fragment = tiles.reduce((fragment, element) => {
-  fragment.appendChild(element);
-  return fragment;
-}, document.createDocumentFragment());
+dificultyRange.addEventListener('input', e => {
+  dificulty = e.target.value;
+  dificultyLabel.innerText = dificulty;
+});
 
-ulSliding.appendChild(fragment);
+applyButton.addEventListener('click', e => {
+  bootstrap();
+  sheetList.classList.toggle('open');
+});
+
+bootstrap();
+
+function bootstrap() {
+  tiles = createTiles(size);
+  blank = tiles[tiles.length - 1];
+  blank.className = 'blank';
+
+  startGame();
+
+	const fragment = tiles.reduce((fragment, element) => {
+	  fragment.appendChild(element);
+	  return fragment;
+	}, document.createDocumentFragment());
+
+	gameArea.appendChild(fragment);
+}
 
 function startGame() {
   moves = [];
@@ -55,6 +84,10 @@ function startGame() {
 
   shuffle(dificulty);
   updateMoveCount();
+}
+
+function toggleSettings() {
+  sheetList.classList.toggle('open');
 }
 
 function toggleFabList() {
