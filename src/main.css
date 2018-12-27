@@ -16,7 +16,7 @@
   --color-warn: #FF5722;
   --color-warn-darker: #D84315;
 
-  --content-size: 88vmin;
+  --content-size: 80vmin;
 }
 
 /* Game Styles */
@@ -74,6 +74,7 @@ html,
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .overlay{
@@ -124,8 +125,7 @@ footer{
   height: var(--content-size);
   display: grid;
   grid-gap: .5em;
-  padding: 0;
-  margin: 1em 0;
+  margin-bottom: 4em;
   transition: all 0.1s ease-in-out;
 }
 
@@ -444,9 +444,9 @@ footer{
     border-radius: 0.2em 0.2em 0 0;
     justify-content: space-around;
     margin: auto;
-    width: var(--content-size);
+    width: calc(var(--content-size) * 1.5);
     left: 50%;
-    margin-left: calc(var(--content-size) / -2);
+    margin-left: calc(var(--content-size) * 1.5 / -2);
   }
 }
 
