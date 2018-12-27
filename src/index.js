@@ -2,6 +2,8 @@ import style from './main.css';
 
 const root = document.querySelector(':root');
 
+const overlay = document.getElementById('overlay');
+
 const gameArea = document.getElementById('gameArea');
 const sheetList = document.getElementById('sheetList');
 const fabList = document.getElementById('fabList');
@@ -28,6 +30,7 @@ sizeInput.oninput = updateSize;
 dificultyInput.oninput = updateDificulty;
 gameArea.onclick = tileClicked;
 startButton.onclick = startGameClicked;
+overlay.onclick = toggleSettings
 
 let size = 4;
 let dificulty = 5;
@@ -90,9 +93,12 @@ function startGameClicked() {
 }
 
 function toggleSettings() {
-  if(sheetList.classList.toggle('open')) {
+  if (sheetList.classList.toggle('open')) {
+    overlay.style.display = 'block';
     solve();
     endGame();
+  } else {
+    overlay.style.display = 'none';
   }
 }
 

@@ -76,6 +76,16 @@ html,
   align-items: center;
 }
 
+.overlay{
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 3;
+}
+
 .win-message {
   display: none;
   align-items: center;
@@ -103,6 +113,7 @@ footer{
   width: 100%;
   position: fixed;
   bottom: 0;
+  z-index: 4;
   box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),
               0 4px 5px 0 rgba(0,0,0,.14),
               0 1px 10px 0 rgba(0,0,0,.12);
@@ -114,7 +125,7 @@ footer{
   display: grid;
   grid-gap: .5em;
   padding: 0;
-  margin-top: 2em;
+  margin: 1em 0;
   transition: all 0.1s ease-in-out;
 }
 
@@ -433,10 +444,9 @@ footer{
     border-radius: 0.2em 0.2em 0 0;
     justify-content: space-around;
     margin: auto;
-    width: 40%;
-    z-index: 3;
+    width: var(--content-size);
     left: 50%;
-    margin-left: -20%;
+    margin-left: calc(var(--content-size) / -2);
   }
 }
 
