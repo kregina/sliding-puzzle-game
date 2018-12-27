@@ -84,6 +84,7 @@ function startGame() {
 
 function startGameClicked() {
   sheetList.classList.toggle('open', false);
+  overlay.style.display = 'none';
   if(settingsChanged) {
     settingsChanged = false;
     bootstrap();
