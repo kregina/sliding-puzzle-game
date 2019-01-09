@@ -1,5 +1,4 @@
 # Sliding puzzle game
-This game was developed as a challenge for Media Monks Frontend Developer opportunity.
 
 ## Demo
 
